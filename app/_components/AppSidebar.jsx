@@ -1,7 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
+import { useUser } from "@clerk/nextjs";
+import { Bolt } from "lucide-react";
+import { SignOutButton } from "@clerk/nextjs";
+import {  
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -9,11 +12,14 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, User } from "lucide-react";
 import { useTheme } from "next-themes";
+import { SignInButton } from "@clerk/nextjs";
+import UsageCreditProgress from "./UsageCreditProgress";
 
 export function AppSidebar() {
   const { theme, setTheme } = useTheme();
+  const {user} = useUser();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -53,9 +59,13 @@ export function AppSidebar() {
 
           {/* New Chat Button */}
           <div>
-            <Button className="mt-2 w-full" size="lg">
+            {user ?  <Button className="mt-2 w-full" size="lg">
               + New Chat
+            </Button> : <SignInButton>
+                  <Button className="mt-2 w-full" size="lg">
+              Sign In to Chat
             </Button>
+              </SignInButton>}
           </div>
         </div>
       </SidebarHeader>
@@ -64,16 +74,30 @@ export function AppSidebar() {
         <SidebarGroup>
           <div className="p-3">
             <h2 className="font-bold text-lg">Chat</h2>
-            <p className="text-sm text-gray-400">
+            {!user && <p className="text-sm text-gray-400">
               Sign in to start chatting with multiple AI Models
-            </p>
+            </p> }
           </div>
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+     <SidebarFooter>
         <div className="p-3 mb-10">
-          <Button className="w-full">Sign In / Sign Up</Button>
+          {!user ? (
+            <SignInButton mode="modal">
+              <Button className="w-full">Sign In / Sign Up</Button>
+            </SignInButton>
+          ) : (
+            <div>
+              <UsageCreditProgress />
+              <Button className="w-full mb-3">
+                <Bolt /> Upgrade Plan
+              </Button>
+              <SignOutButton>
+                <Button className="w-full">Sign Out</Button>
+              </SignOutButton>
+            </div>
+          )}
         </div>
       </SidebarFooter>
     </Sidebar>
