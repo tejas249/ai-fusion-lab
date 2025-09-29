@@ -1,23 +1,49 @@
 "use client"
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import AIModelList from "@/shared/AIModelList";
 import Image from "next/image";
-import React from "react";
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 import { Lock } from "lucide-react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { SelectLabel } from "@radix-ui/react-select";
+import { AiSelectedModelContext } from "@/context/AiSelectedModelContext";
+import { db } from "@/config/FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const AIMultiModel = () => {
-  const [aiModelList, setAIModelList] = useState(AIModelList);  
+  const [aiModelList, setAIModelList] = useState(AIModelList);
+  const { aiSelectedModels, setAiSelectedModels } = useContext(AiSelectedModelContext);
+
+  // Update selected model in context and Firebase
+  const handleModelChange = async (model, value) => {
+    setAiSelectedModels((prev) => ({
+      ...prev,
+      [model.model]: {
+        ...prev[model.model],
+        modelId: value,
+      },
+    }));
+
+    // Save to Firestore (replace 'userId' with actual user id if available)
+    try {
+      await setDoc(
+        doc(db, "selectedModels", model.model),
+        { modelId: value },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating model in Firebase:", error);
+    }
+  };
 
   const onToggleChange = (model, value) => {
     setAIModelList((prev) =>
@@ -46,16 +72,42 @@ const AIMultiModel = () => {
               />
 
               {model.enable && (
-                <Select>
+                <Select
+                  value={aiSelectedModels[model.model]?.modelId || model.subModel[0]?.name}
+                  onValueChange={(value) => handleModelChange(model, value)}
+                  disabled = {model.premium}
+                >
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder={model.subModel[0].name} />
+                    <SelectValue>
+                      {aiSelectedModels[model.model]?.modelId || model.subModel[0]?.name}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {model.subModel.map((subModel) => (
-                      <SelectItem key={subModel.name} value={subModel.name}>
-                        {subModel.name}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup className="px-3">
+                      <SelectLabel>Free</SelectLabel>
+                      {model.subModel.map(
+                        (subModel) =>
+                          !subModel.premium && (
+                            <SelectItem key={subModel.name} value={subModel.name}>
+                              {subModel.name}
+                            </SelectItem>
+                          )
+                      )}
+                    </SelectGroup>
+                    <SelectGroup className="px-3">
+                      <SelectLabel>Premium</SelectLabel>
+                      {model.subModel.map(
+                        (subModel) =>
+                          subModel.premium && (
+                            <SelectItem key={subModel.name} value={subModel.name} disabled={subModel.premium}>
+                              {subModel.name}{" "}
+                              {subModel.premium && (
+                                <Lock className="inline-block size-4 ml-2 text-gray-400" />
+                              )}
+                            </SelectItem>
+                          )
+                      )}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               )}
@@ -74,11 +126,13 @@ const AIMultiModel = () => {
               )}
             </div>
           </div>
-          
-          {model.premium&&model.enable&&<div className="flex items-center justify-center mt-5">
-            <Button> <Lock/> Upgrade To Unlock</Button>
-          </div>
-         }
+          {model.premium && model.enable && (
+            <div className="flex items-center justify-center mt-5">
+              <Button>
+                <Lock /> Upgrade To Unlock
+              </Button>
+            </div>
+          )}
         </div>
       ))}
     </div>
