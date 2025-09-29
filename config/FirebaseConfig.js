@@ -8,7 +8,7 @@ import { getFirestore }from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: NEXT_PUBLIC_FIREBASE_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "ai-fusion-lab-25ffd.firebaseapp.com",
   projectId: "ai-fusion-lab-25ffd",
   storageBucket: "ai-fusion-lab-25ffd.firebasestorage.app",
