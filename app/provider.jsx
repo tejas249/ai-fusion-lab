@@ -9,14 +9,15 @@ import { setDoc } from 'firebase/firestore'
 import { doc } from 'firebase/firestore'
 import { AiSelectedModelContext } from '@/context/AiSelectedModelContext'
 import { DefaultModel } from '@/shared/AiModelsShared'
-
+import { getDoc } from "firebase/firestore";
 function Provider({
     children, ...props
 }) {
   
 const { user } = useUser();
-const { db } = require("../config/FirebaseConfig");  const[aiSelectedModels, setAiSelectedModels] = useState(DefaultModel);
-
+const { db } = require("../config/FirebaseConfig");  
+const[aiSelectedModels, setAiSelectedModels] = useState(DefaultModel);
+const[messages, setMessages] = useState();
  
   useEffect(()=>{
 
@@ -57,7 +58,7 @@ const { db } = require("../config/FirebaseConfig");  const[aiSelectedModels, set
             enableSystem
             disableTransitionOnChange>
 
-       <AiSelectedModelContext.Provider value={{aiSelectedModels, setAiSelectedModels}}>        
+       <AiSelectedModelContext.Provider value={{aiSelectedModels, setAiSelectedModels,setMessages}}>        
         <SidebarProvider>
             <AppSidebar/>
             
