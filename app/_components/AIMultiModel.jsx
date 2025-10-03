@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext, useState } from "react";
 import AIModelList from "@/shared/AIModelList";
 import Image from "next/image";
@@ -21,7 +21,8 @@ import { doc, setDoc } from "firebase/firestore";
 
 const AIMultiModel = () => {
   const [aiModelList, setAIModelList] = useState(AIModelList);
-  const { aiSelectedModels, setAiSelectedModels } = useContext(AiSelectedModelContext);
+  const { messages, aiSelectedModels, setAiSelectedModels, setMessages } =
+    useContext(AiSelectedModelContext);
 
   // Update selected model in context and Firebase
   const handleModelChange = async (model, value) => {
@@ -47,9 +48,7 @@ const AIMultiModel = () => {
 
   const onToggleChange = (model, value) => {
     setAIModelList((prev) =>
-      prev.map((m) =>
-        m.model === model ? { ...m, enable: value } : m
-      )
+      prev.map((m) => (m.model === model ? { ...m, enable: value } : m))
     );
   };
 
@@ -73,13 +72,17 @@ const AIMultiModel = () => {
 
               {model.enable && (
                 <Select
-                  value={aiSelectedModels[model.model]?.modelId || model.subModel[0]?.name}
+                  value={
+                    aiSelectedModels[model.model]?.modelId ||
+                    model.subModel[0]?.name
+                  }
                   onValueChange={(value) => handleModelChange(model, value)}
-                  disabled = {model.premium}
+                  disabled={model.premium}
                 >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue>
-                      {aiSelectedModels[model.model]?.modelId || model.subModel[0]?.name}
+                      {aiSelectedModels[model.model]?.modelId ||
+                        model.subModel[0]?.name}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
@@ -88,7 +91,10 @@ const AIMultiModel = () => {
                       {model.subModel.map(
                         (subModel) =>
                           !subModel.premium && (
-                            <SelectItem key={subModel.name} value={subModel.name}>
+                            <SelectItem
+                              key={subModel.name}
+                              value={subModel.name}
+                            >
                               {subModel.name}
                             </SelectItem>
                           )
@@ -99,7 +105,11 @@ const AIMultiModel = () => {
                       {model.subModel.map(
                         (subModel) =>
                           subModel.premium && (
-                            <SelectItem key={subModel.name} value={subModel.name} disabled={subModel.premium}>
+                            <SelectItem
+                              key={subModel.name}
+                              value={subModel.name}
+                              disabled={subModel.premium}
+                            >
                               {subModel.name}{" "}
                               {subModel.premium && (
                                 <Lock className="inline-block size-4 ml-2 text-gray-400" />
@@ -133,6 +143,32 @@ const AIMultiModel = () => {
               </Button>
             </div>
           )}
+
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {Array.isArray(messages?.[model.model]) && messages[model.model].length > 0 ? (
+              messages[model.model].map((m, i) => (
+                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div
+                    className={`max-w-[90%] whitespace-pre-wrap break-words p-3 rounded-lg shadow-sm ${
+                      m.role === 'user'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-muted text-foreground'
+                    }`}
+                  >
+                    {m.role === 'assistant' && (
+                      <div className="text-[10px] opacity-70 mb-1">
+                        {m.model ?? model.model}
+                      </div>
+                    )}
+                    <div className="text-sm leading-relaxed">{m.content}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground italic">No messages for {model.model}</div>
+            )}
+          </div>
+
         </div>
       ))}
     </div>

@@ -12,16 +12,27 @@ const getDefaultSelectedModels = () => {
   return defaults;
 };
 
+// ✅ Add messages and setMessages to context
 export const AiSelectedModelContext = createContext({
   aiSelectedModels: {},
   setAiSelectedModels: () => {},
+  messages: {},
+  setMessages: () => {},
 });
 
 export const AiSelectedModelProvider = ({ children }) => {
   const [aiSelectedModels, setAiSelectedModels] = useState(getDefaultSelectedModels());
+  const [messages, setMessages] = useState({}); // ✅ Add this
 
   return (
-    <AiSelectedModelContext.Provider value={{ aiSelectedModels, setAiSelectedModels }}>
+    <AiSelectedModelContext.Provider
+      value={{
+        aiSelectedModels,
+        setAiSelectedModels,
+        messages,
+        setMessages, // ✅ Provide it here
+      }}
+    >
       {children}
     </AiSelectedModelContext.Provider>
   );
