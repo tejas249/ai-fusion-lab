@@ -144,31 +144,30 @@ const AIMultiModel = () => {
             </div>
           )}
 
-          <div className="flex-1 p-4">
-  <div className="flex-1 p-4 space-y-2 overflow-y-auto">
-    {Array.isArray(messages?.[model.model]) && messages[model.model].length > 0 ? (
-      messages[model.model].map((m, i) => (
-        <div
-          key={i}
-          className={`p-2 rounded-md ${
-            m.roles === 'user'
-              ? 'bg-blue-100 text-blue-900'
-              : 'bg-gray-100 text-gray-900'
-          }`}
-        >
-          {m.role === 'assistant' && (
-            <div className="text-xs text-gray-500 mb-1">
-              {m.model ?? model.model}
-            </div>
-          )}
-          <h2>{m.content}</h2>
-        </div>
-      ))
-    ) : (
-      <div className="text-sm text-gray-400 italic">No messages for {model.model}</div>
-    )}
-  </div>
-</div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {Array.isArray(messages?.[model.model]) && messages[model.model].length > 0 ? (
+              messages[model.model].map((m, i) => (
+                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div
+                    className={`max-w-[90%] whitespace-pre-wrap break-words p-3 rounded-lg shadow-sm ${
+                      m.role === 'user'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-muted text-foreground'
+                    }`}
+                  >
+                    {m.role === 'assistant' && (
+                      <div className="text-[10px] opacity-70 mb-1">
+                        {m.model ?? model.model}
+                      </div>
+                    )}
+                    <div className="text-sm leading-relaxed">{m.content}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground italic">No messages for {model.model}</div>
+            )}
+          </div>
 
         </div>
       ))}

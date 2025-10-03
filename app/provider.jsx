@@ -17,7 +17,7 @@ function Provider({
 const { user } = useUser();
 const { db } = require("../config/FirebaseConfig");  
 const[aiSelectedModels, setAiSelectedModels] = useState(DefaultModel);
-const[messages, setMessages] = useState();
+const[messages, setMessages] = useState({});
  
   useEffect(()=>{
 
@@ -58,7 +58,7 @@ const[messages, setMessages] = useState();
             enableSystem
             disableTransitionOnChange>
 
-       <AiSelectedModelContext.Provider value={{aiSelectedModels, setAiSelectedModels,setMessages}}>        
+       <AiSelectedModelContext.Provider value={{aiSelectedModels, setAiSelectedModels, messages, setMessages}}>        
         <SidebarProvider>
             <AppSidebar/>
             
