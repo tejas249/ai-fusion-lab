@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 AI Fusion – Multi-Model AI Chat Platform
 
-## Getting Started
+**AI Fusion** is a modern web application built with **Next.js** and **React** that allows users to interact with multiple AI models — **ChatGPT**, **DeepSeek**, and **Gemini** — all in one place.
+It features **secure authentication** with Clerk,Kravix Studio API ,  **real-time data handling** with Firebase, and a **beautiful, responsive UI** built using **ShadCN UI** and **Tailwind CSS**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🧠 Features
+
+* 💬 Chat with multiple AI models (ChatGPT, DeepSeek, Gemini)
+* 🔐 Secure user authentication using **Clerk**
+* ☁️ Store user chats and data in **Firebase**
+* 🎨 Sleek and responsive UI built with **ShadCN UI + Tailwind CSS**
+* ⚡ Real-time updates and smooth interactions using **Next.js App Router**
+* 🌙 Modern design with theme support and seamless user experience
+
+---
+
+## 🛠️ Tech Stack
+
+| Category           | Technologies Used                       |
+| ------------------ | --------------------------------------- |
+| Frontend           | Next.js, React, Tailwind CSS, ShadCN UI |
+| Authentication     | Clerk                                   |
+| Backend / Database | Firebase (Firestore)                    |
+| AI Integrations    | KravixStudio |
+| Hosting            | Vercel                                  |
+
+---
+
+## 📸 Preview
+LIVE LINK : https://ai-fusion-lab-nine.vercel.app
+
+---
+
+## ⚙️ Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/tejas249/ai-fusion.git
+   cd ai-fusion
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set Up Environment Variables**
+   Create a `.env.local` file in the root directory and add the following:
+
+   ```env
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+   CLERK_SECRET_KEY=your_clerk_secret
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+   OPENAI_API_KEY=your_openai_key
+   DEEPSEEK_API_KEY=your_deepseek_key
+   GEMINI_API_KEY=your_gemini_key
+   ```
+
+4. **Run the Application**
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and navigate to 👉 **[http://localhost:3000](http://localhost:3000)**
+
+---
+
+## 📂 Folder Structure
+
+```
+AI-Fusion/
+├── app/
+│   ├── components/
+│   ├── api/
+│   └── pages/
+├── public/
+├── styles/
+├── utils/
+├── .env.local
+├── package.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🤝 Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions are welcome!
+If you’d like to improve features, fix bugs, or enhance UI/UX, feel free to fork the repo and open a pull request.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the **MIT License**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 💬 Connect
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+👤 **Tejas Kamble**
+📧 [tejaskamble0208@gmail.com](mailto:tejaskamble0208@gmail.com)
+🔗 [Portfolio](https://tejasscodes.netlify.app) • [GitHub](https://github.com/tejas249) • [LinkedIn](https://linkedin.com/in/tejas249)
