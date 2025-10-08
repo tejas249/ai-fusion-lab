@@ -52,14 +52,7 @@ LIVE LINK : https://ai-fusion-lab-nine.vercel.app
    Create a `.env.local` file in the root directory and add the following:
 
    ```env
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
-   CLERK_SECRET_KEY=your_clerk_secret
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
-   OPENAI_API_KEY=your_openai_key
-   DEEPSEEK_API_KEY=your_deepseek_key
-   GEMINI_API_KEY=your_gemini_key
+ 
    ```
 
 4. **Run the Application**
